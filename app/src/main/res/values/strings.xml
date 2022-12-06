@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">UDAAN</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="register">Register</string>
+    <string name="view_profile">View Profile</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="print">Print</string>
+</resources>
