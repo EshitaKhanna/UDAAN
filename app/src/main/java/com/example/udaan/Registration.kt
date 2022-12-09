@@ -1,28 +1,31 @@
 package com.example.udaan
 
-import android.text.Layout
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,22 +33,20 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.udaan.ui.theme.Screens
 
-
 @Composable
-fun RegisterScreen(
-    navController: NavController
-) {
-
+fun RegisterScreen(navController: NavController) {
+    //UdaanApp()
     val nameValue = remember { mutableStateOf("") }
     val emailValue = remember { mutableStateOf("") }
     val phoneValue = remember { mutableStateOf("") }
     val passwordValue = remember { mutableStateOf("") }
     val confirmPasswordValue = remember { mutableStateOf("") }
-
     val passwordVisibility = remember { mutableStateOf(false) }
     val confirmPasswordVisibility = remember { mutableStateOf(false) }
-
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
+
+    var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -59,13 +60,6 @@ fun RegisterScreen(
 
             ){
             Spacer(modifier = Modifier.padding(30.dp))
-            /*Image(
-                painterResource(id = R.drawable.login),
-                contentDescription = "login",
-                modifier = Modifier
-                    .size(150.dp)
-                    .padding(20.dp)
-            )*/
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,80 +75,184 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.padding(20.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
                 // Name
-                OutlinedTextInput(
-                    label = "Name",
-                    value =  nameValue.value,
-                    onValueChange = { nameValue.value = it } ,
+                OutlinedTextField(
+                    value = nameValue.value,
+                    onValueChange = {nameValue.value = it},
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Next,
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down) }
-                    )
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    ),
+                    label = { Text(text = "Name") },
+                    placeholder = { Text(text = "Name") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedLabelColor = colorResource(id = R.color.primaryColor),
+                        focusedLabelColor = colorResource(id = R.color.primaryColor),
+                        cursorColor = colorResource(id = R.color.primaryColor)
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    leadingIcon = { Icon(imageVector = Icons.Filled.Person, contentDescription =null ) },
+                    trailingIcon = { }
+
                 )
                 //Email
-                OutlinedTextInput(
-                    label = "E-mail Address",
+                OutlinedTextField(
                     value = emailValue.value,
-                    onValueChange = { emailValue.value = it },
+                    onValueChange = {emailValue.value = it},
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Next,
                         keyboardType = KeyboardType.Email
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down) }
-                    )
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    ),
+                    label = { Text(text = "E-Mail Address") },
+                    placeholder = { Text(text = "E-mail Address") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedLabelColor = colorResource(id = R.color.primaryColor),
+                        focusedLabelColor = colorResource(id = R.color.primaryColor),
+                        cursorColor = colorResource(id = R.color.primaryColor)
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    leadingIcon = { Icon(imageVector = Icons.Filled.Email, contentDescription =null ) },
+                    trailingIcon = { }
 
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
+
                 //Phone Number
-                OutlinedTextInput(
-                    label = "Mobile Number",
-                    value =  phoneValue.value,
-                    onValueChange = { phoneValue.value = it } ,
-                    keyboardOptions =  KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Next
+                OutlinedTextField(
+                    value = phoneValue.value,
+                    onValueChange = {phoneValue.value = it},
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Number
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down) }
-                    )
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    ),
+                    label = { Text(text = "Phone Number") },
+                    placeholder = { Text(text = "Phone Number") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedLabelColor = colorResource(id = R.color.primaryColor),
+                        focusedLabelColor = colorResource(id = R.color.primaryColor),
+                        cursorColor = colorResource(id = R.color.primaryColor)
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    leadingIcon = { Icon(imageVector = Icons.Filled.Call, contentDescription =null ) },
+                    trailingIcon = { }
+
                 )
                 //Password
-                OutlinedTextInput(
-                    label = "Password",
-                    value =  passwordValue.value,
-                    onValueChange = { passwordValue.value = it } ,
-                    keyboardOptions =  KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Next,
-                        keyboardType = KeyboardType.Password
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down) }
-                    )
-                )
-                Spacer(modifier = Modifier.padding(5.dp))
-                //Confirm Password
-                OutlinedTextInput(
-                    label = "Confirm Password",
-                    value =  confirmPasswordValue.value,
-                    onValueChange = { confirmPasswordValue.value = it } ,
-                    keyboardOptions =  KeyboardOptions.Default.copy(
+                OutlinedTextField(
+                    value = passwordValue.value,
+                    onValueChange = {passwordValue.value = it},
+                    keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Done,
                         keyboardType = KeyboardType.Password
                     ),
                     keyboardActions = KeyboardActions(
-                        onDone = { focusManager.clearFocus()}
+                        onDone = { focusManager.clearFocus() }
+                    ),
+                    label = { Text(text = "Password") },
+                    placeholder = { Text(text = "Password") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedLabelColor = colorResource(id = R.color.primaryColor),
+                        focusedLabelColor = colorResource(id = R.color.primaryColor),
+                        cursorColor = colorResource(id = R.color.primaryColor)
+                    ),
+                    singleLine = true,
+                    leadingIcon = { Icon(imageVector = Icons.Filled.Lock, contentDescription =null ) },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            passwordVisibility.value = !passwordVisibility.value
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.password_eye),
+                                contentDescription = null,
+                            )
+                        }
+                    },
+                    visualTransformation = if (passwordVisibility.value) VisualTransformation.None
+                    else PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester = focusRequester),
+
                     )
-                )
+                Spacer(modifier = Modifier.padding(5.dp))
+
+                //Confirm Password
+                OutlinedTextField(
+                    value = confirmPasswordValue.value,
+                    onValueChange = {confirmPasswordValue.value = it},
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done,
+                        keyboardType = KeyboardType.Password
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { focusManager.clearFocus() }
+                    ),
+                    label = { Text(text = "Confirm Password") },
+                    placeholder = { Text(text = "Confirm Password") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedBorderColor = colorResource(id = R.color.primaryColor),
+                        unfocusedLabelColor = colorResource(id = R.color.primaryColor),
+                        focusedLabelColor = colorResource(id = R.color.primaryColor),
+                        cursorColor = colorResource(id = R.color.primaryColor)
+                    ),
+                    singleLine = true,
+                    leadingIcon = { Icon(imageVector = Icons.Filled.Lock, contentDescription =null ) },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            confirmPasswordVisibility.value = !confirmPasswordVisibility.value
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.password_eye),
+                                contentDescription = null,
+                            )
+                        }
+                    },
+                    visualTransformation = if (confirmPasswordVisibility.value) VisualTransformation.None
+                    else PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester = focusRequester),
+
+                    )
                 Spacer(modifier = Modifier.padding(20.dp))
-                Task_Button(
+           /*     Task_Buttons(
                     onClick = {
                         navController.navigate(Screens.DashboardScreen.route)
                     },
                     task = stringResource(id = R.string.sign_up),
-                )
+                )*/
+                Button(
+                    modifier = Modifier
+                        .width(130.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.primaryColor)),
+
+                    // the button is enabled when the user makes a selection
+                    //enabled = selectedValue.isNotEmpty(),
+                    onClick = { navController.navigate(Screens.RegistrationScreen2.route) }
+                ) {
+                    Text(stringResource(id = R.string.next))
+                }
                 Spacer(modifier = Modifier.padding(15.dp))
                 Row {
                     Text(text = "Already have an account? ", fontSize = 16.sp)
@@ -171,11 +269,75 @@ fun RegisterScreen(
                         color = colorResource(id = R.color.secondaryColor),
                     )
                 }
+
+
             }
         }
     }
 }
 
+@Composable
+fun RegisterScreen2(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {},
+   // onCancelButtonClicked: () -> Unit = {},
+    //onNextButtonClicked: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    navController: NavController
+){
+    //UdaanApp()
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    Column (
+        modifier = modifier.padding(16.dp)
+    ){
+        Spacer(modifier = Modifier.padding(30.dp))
+        Text(text =  "Pick a role", fontSize =  18.sp)
+        Spacer(modifier = Modifier.padding(10.dp))
+        options.forEach { item ->
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item, fontSize =  16.sp)
+            }
+        }
+        Divider(thickness = 1.dp, modifier = modifier.padding(bottom = 16.dp))
+        Spacer(modifier = Modifier.padding(250.dp))
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ){
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { navController.navigate(Screens.RegistrationScreen.route) })
+            {
+                Text(stringResource(R.string.cancel))
+            }
+            Button(
+                modifier = Modifier.weight(1f),
+                // the button is enabled when the user makes a selection
+                enabled = selectedValue.isNotEmpty(),
+                onClick = { navController.navigate(Screens.DashboardScreen.route) }
+            ) {
+                Text(stringResource(id = R.string.sign_up))
+            }
+        }
+    }
+}
 
 @Composable
 fun Task_Buttons(
@@ -197,40 +359,14 @@ fun Task_Buttons(
     }
 }
 
-@Composable
-fun Outlined_TextInput(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    keyboardOptions: KeyboardOptions,
-    keyboardActions: KeyboardActions,
-    //trailingIcon: (@Composable() () -> Unit)? = null,
-    modifier: Modifier = Modifier
-){
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = label) },
-        placeholder = { Text(text = label) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = colorResource(id = R.color.primaryColor),
-            unfocusedBorderColor = colorResource(id = R.color.primaryColor),
-            unfocusedLabelColor = colorResource(id = R.color.primaryColor),
-            focusedLabelColor =  colorResource(id = R.color.primaryColor),
-            cursorColor = colorResource(id = R.color.primaryColor)
-        ),
-        modifier = Modifier.fillMaxWidth(),
-        singleLine = true,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        // trailingIcon = {}
-
-    )
-}
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun RegisterPreview(){
+    RegisterScreen2(navController = rememberNavController(), options = listOf("Student", "Volunteer"))
+
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun RegisterPreview2(){
     RegisterScreen(navController = rememberNavController())
 }
