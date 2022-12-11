@@ -1,6 +1,5 @@
 package com.example.udaan
 
-import android.graphics.Paint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -20,19 +18,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.udaan.ui.theme.Screens
+
 
 @Composable
-fun Dashboard(navController: NavController){
-    //UdaanApp()
+fun Dashboard(){
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Box (
-            contentAlignment = Alignment.TopStart,
             modifier = Modifier
                 .height(260.dp)
                 .fillMaxWidth()
@@ -52,6 +49,7 @@ fun Dashboard(navController: NavController){
                         .height(80.dp)
                         .width(80.dp)
                         .wrapContentWidth(align = Alignment.CenterHorizontally),
+
                     )
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
@@ -68,11 +66,10 @@ fun Dashboard(navController: NavController){
         }
 
         Spacer(modifier = Modifier.height(20.dp))
+
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-            FunctionsCopy(
-                onClick = {navController.navigate(Screens.ICard.route)},
-                image = R.drawable.i_card, funct = "Generate/View I-Card")
-            FunctionsCopy(onClick = { },image = R.drawable.attendance, funct = "Attendance")
+            FunctionsCopy(onClick = {}, image = R.drawable.i_card, funct = "Generate/View I-Card")
+            FunctionsCopy(onClick = {},image = R.drawable.attendance, funct = "Attendance")
             FunctionsCopy(onClick = {},image = R.drawable.feedback, funct = "Feedback")
         }
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -83,6 +80,7 @@ fun Dashboard(navController: NavController){
         Row() {
             FunctionsCopy(onClick = {},image = R.drawable.report, funct = "Class Report")
         }
+
     }
 }
 
@@ -152,5 +150,5 @@ fun FunctionsCopy(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DashboardPreview(){
-    Dashboard(navController = rememberNavController())
+    Dashboard()
 }
