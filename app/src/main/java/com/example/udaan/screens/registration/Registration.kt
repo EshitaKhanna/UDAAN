@@ -2,6 +2,7 @@ package com.example.udaan.screens.registration
 import android.app.DatePickerDialog
 import android.content.Context
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -35,7 +36,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.udaan.R
+import com.example.udaan.firebase.RealTimeDatabase
+import com.example.udaan.firebase.UserData
 import com.example.udaan.ui.theme.Screens
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.Calendar
 import java.util.Date
 
@@ -45,7 +50,7 @@ fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel()
 ) {
     //UdaanApp()
-
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val registerUiState by registerViewModel.uiState.collectAsState()
     Box(
@@ -266,9 +271,31 @@ fun RegisterScreen(
                         .width(130.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.primaryColor)),
 
-                    // the button is enabled when the user makes a selection
+                    //the button is enabled when the user makes a selection
                     //enabled = selectedValue.isNotEmpty(),
-                    onClick = {navController.navigate(Screens.RegistrationScreen2.route) }
+                    onClick = {
+                        navController.navigate(Screens.RegistrationScreen2.route)
+                        if (registerUiState.nameValue.isNotEmpty() &&registerUiState.emailValue.isNotEmpty()
+                            && registerUiState.phoneValue.isNotEmpty() && registerUiState.passwordValue.isNotEmpty()
+                            && registerUiState.confirmPasswordValue.isNotEmpty() &&
+                            registerUiState.passwordValue == registerUiState.confirmPasswordValue
+                        ) {
+                            val userInfo = UserData(registerUiState.nameValue, registerUiState.emailValue,
+                                    registerUiState.phoneValue , registerUiState.passwordValue)
+
+                            registerUiState.myRef.child(registerUiState.nameValue).setValue(userInfo).addOnSuccessListener{
+                                registerUiState.nameValue = ""
+                                registerUiState.emailValue = ""
+                                registerUiState.phoneValue = ""
+                                registerUiState.passwordValue = ""
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                            }.addOnFailureListener{
+                                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                        }else{
+                            Toast.makeText(context, "Invalid values", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 ) {
                     Text(stringResource(id = R.string.next))
                 }
@@ -428,3 +455,6 @@ fun RegisterPreview(){
 fun RegisterPreview2(){
     RegisterScreen(navController = rememberNavController())
 }
+
+
+

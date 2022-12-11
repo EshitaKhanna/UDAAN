@@ -1,10 +1,16 @@
 package com.example.udaan.screens.registration
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+
 import androidx.compose.ui.focus.FocusRequester
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterUiState (
+
+    val database: FirebaseDatabase = Firebase.database,
+    val myRef: DatabaseReference = database.getReference("User Info"),
 
     var nameValue:String = "",
     var emailValue:String = "",

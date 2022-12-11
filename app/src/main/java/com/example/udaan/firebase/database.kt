@@ -7,7 +7,9 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun RealTimeDatabase(){
     val database = Firebase.database
-    val myRef = database.getReference("Student")
+    val myRef = database.getReference("User Info")
+
+
 }
 
 
