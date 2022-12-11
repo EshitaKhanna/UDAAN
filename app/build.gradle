@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 
@@ -86,9 +87,10 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.3'
 
     //google
-    implementation platform('com.google.firebase:firebase-bom:31.1.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
+//    classpath 'com.google.gms:google-services:4.3.14'
 
 }

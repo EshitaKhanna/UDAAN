@@ -4,10 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.udaan.screens.login.LoginScreen
+import com.example.udaan.screens.registration.RegisterScreen
+import com.example.udaan.screens.registration.RegisterScreen2
 import com.example.udaan.ui.theme.Screens
 
 @Composable
-fun setUpNavController(controller: NavHostController){
+fun SetUpNavController(controller: NavHostController){
     NavHost(navController = controller, startDestination = Screens.MainScreen.route){
         composable(Screens.MainScreen.route){
             //show screen main
@@ -19,12 +22,19 @@ fun setUpNavController(controller: NavHostController){
         }
         composable(Screens.DashboardScreen.route){
             //show screen dashboard
-            Dashboard()
+            Dashboard(navController = controller)
         }
-
         composable(Screens.RegistrationScreen.route){
             //show screen registration
             RegisterScreen(navController = controller)
+        }
+        composable(Screens.RegistrationScreen2.route){
+            //show screen registration - 2
+            RegisterScreen2(navController = controller, options = listOf("Student", "Volunteer"))
+        }
+        composable(Screens.ICard.route){
+            //show screen registration
+            ICardScreen(navController = controller)
         }
     }
 }

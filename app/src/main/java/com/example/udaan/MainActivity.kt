@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    setUpNavController(rememberNavController())
+                    SetUpNavController(rememberNavController())
                 }
             }
         }

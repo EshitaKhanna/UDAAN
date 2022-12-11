@@ -1,7 +1,6 @@
 package com.example.udaan.screens.registration
 import android.app.DatePickerDialog
 import android.content.Context
-import android.graphics.Paint
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,7 +14,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
@@ -45,8 +43,6 @@ import java.util.Date
 fun RegisterScreen(
     navController: NavController,
     registerViewModel: RegisterViewModel = viewModel()
-    /* auth: FirebaseAuth*/
-
 ) {
     //UdaanApp()
 
@@ -272,7 +268,7 @@ fun RegisterScreen(
 
                     // the button is enabled when the user makes a selection
                     //enabled = selectedValue.isNotEmpty(),
-                    onClick = { navController.navigate(Screens.RegistrationScreen2.route) }
+                    onClick = {navController.navigate(Screens.RegistrationScreen2.route) }
                 ) {
                     Text(stringResource(id = R.string.next))
                 }
@@ -390,7 +386,6 @@ fun Task_Buttons(
 
 @Composable
 fun showDatePicker(context: Context){
-
     val year: Int
     val month: Int
     val day: Int

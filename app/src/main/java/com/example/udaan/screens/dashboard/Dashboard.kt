@@ -18,10 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.udaan.ui.theme.Screens
 
 
 @Composable
-fun Dashboard(){
+fun Dashboard( navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +69,10 @@ fun Dashboard(){
         Spacer(modifier = Modifier.height(20.dp))
 
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-            FunctionsCopy(onClick = {}, image = R.drawable.i_card, funct = "Generate/View I-Card")
+            FunctionsCopy(
+                onClick = {navController.navigate(Screens.ICard.route)},
+                image = R.drawable.i_card,
+                funct = "Generate/View I-Card")
             FunctionsCopy(onClick = {},image = R.drawable.attendance, funct = "Attendance")
             FunctionsCopy(onClick = {},image = R.drawable.feedback, funct = "Feedback")
         }
@@ -150,5 +154,5 @@ fun FunctionsCopy(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DashboardPreview(){
-    Dashboard()
+    Dashboard(navController = rememberNavController())
 }
