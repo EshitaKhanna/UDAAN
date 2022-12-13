@@ -1,4 +1,4 @@
-package com.example.udaan
+package com.example.udaan.screens.dashboard.i_card
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -13,11 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.udaan.screens.dashboard.i_card.MyWebsiteQR
 
 @Composable
 fun ICardScreen(navController: NavController){
-    Card(modifier = Modifier.padding(20.dp)) {
+    Card(modifier = Modifier
+        .padding(20.dp)
+        .fillMaxSize()) {
+        Spacer(modifier = Modifier.padding(30.dp))
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -26,8 +28,8 @@ fun ICardScreen(navController: NavController){
                 .fillMaxHeight()
                 .padding(10.dp)
         ){
-            Box(){
-                MyWebsiteQR()
+            Box{
+                MyQR()
                 Column(){
                     Text(
                         text = "Name: ",
@@ -37,7 +39,6 @@ fun ICardScreen(navController: NavController){
                         modifier = Modifier
                             .fillMaxWidth()
                     )
-
                     Text(
                         text = "Class: ",
                         fontSize = 20.sp,
@@ -46,7 +47,6 @@ fun ICardScreen(navController: NavController){
                         modifier = Modifier
                             .fillMaxWidth()
                     )
-
                     Text(
                         text = "Enrollment Number: ",
                         fontSize = 20.sp,
@@ -55,7 +55,6 @@ fun ICardScreen(navController: NavController){
                         modifier = Modifier
                             .fillMaxWidth()
                     )
-
                     Text(
                         text = "Mobile Number: ",
                         fontSize = 20.sp,

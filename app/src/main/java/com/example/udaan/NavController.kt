@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.udaan.screens.dashboard.Dashboard
+import com.example.udaan.screens.dashboard.i_card.ICardScreen
 import com.example.udaan.screens.dashboard.students_list.ClassListCopy
 import com.example.udaan.screens.login.LoginScreen
 import com.example.udaan.screens.registration.RegisterScreen

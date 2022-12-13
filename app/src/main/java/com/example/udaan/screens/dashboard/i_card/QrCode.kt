@@ -44,11 +44,9 @@ fun QrCode(
             .aspectRatio(1f)
             .background(qrCodeProperties.background)
     ) {
-        Canvas(modifier = Modifier
-            //.fillMaxSize()
-            .align(Alignment.Center)
-            .height(120.dp)
-            .width(120.dp)
+        Canvas(
+            modifier = Modifier.fillMaxSize()
+                .align(Alignment.Center)
         ) {
             // Calculate the height and width of each column/row
             val rowHeight = (size.width - QR_MARGIN_PX * 1f) / qrCode.matrix.height
@@ -125,9 +123,11 @@ val QR_ERROR_CORRECTION_LEVEL = ErrorCorrectionLevel.Q
 
 
 @Composable
-internal fun MyWebsiteQR() {
+internal fun MyQR() {
     QrCode(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxSize(),
         contents = "Eshita",
         qrCodeProperties = QrCodeProperties(
             foreground = MaterialTheme.colors.onSurface,
@@ -136,8 +136,8 @@ internal fun MyWebsiteQR() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DefaultPreview() {
-        MyWebsiteQR()
+    MyQR()
 }
