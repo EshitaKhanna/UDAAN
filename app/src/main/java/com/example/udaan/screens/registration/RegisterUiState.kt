@@ -8,7 +8,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterUiState (
-
+    //firebase database
     val database: FirebaseDatabase = Firebase.database,
     val myRef: DatabaseReference = database.getReference("User Info"),
 

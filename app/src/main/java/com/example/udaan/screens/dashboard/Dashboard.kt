@@ -1,11 +1,11 @@
-package com.example.udaan
+@file:OptIn(ExperimentalMaterialApi::class)
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+package com.example.udaan.screens.dashboard
+
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,15 +18,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.udaan.R
+//import com.example.udaan.screens.dashboard.students_list.getStudentList
 import com.example.udaan.ui.theme.Screens
 
 
 @Composable
 fun Dashboard( navController: NavController){
+    var check by remember { mutableStateOf<Boolean>(false) }
+    var result by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxHeight(),
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -68,7 +73,7 @@ fun Dashboard( navController: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+/*        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             FunctionsCopy(
                 onClick = {navController.navigate(Screens.ICard.route)},
                 image = R.drawable.i_card,
@@ -83,6 +88,539 @@ fun Dashboard( navController: NavController){
         }
         Row() {
             FunctionsCopy(onClick = {},image = R.drawable.report, funct = "Class Report")
+            FunctionsCopy(onClick = {},image = R.drawable.list, funct = "Class List")
+
+        }*/
+
+        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Button(
+                onClick = { navController.navigate(Screens.ICard.route) },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.i_card),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "I-Card",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.Attendance.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.attendance),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Attendance",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.StudentList.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.feedback),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Feedback",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Button(
+                onClick = { /*navController.navigate(Screens.ICard.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.donate),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Donate",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.Attendance.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.payment),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Payment",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.StudentList.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.chat),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Chat With Student",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Button(
+                onClick = { /*navController.navigate(Screens.ICard.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.report),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class Report",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { navController.navigate(Screens.StudentList.route)},
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.list),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class List",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.StudentList.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.feedback),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Feedback",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Button(
+                onClick = { /*navController.navigate(Screens.ICard.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.report),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class Report",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { navController.navigate(Screens.StudentList.route)},
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.list),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class List",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.StudentList.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.feedback),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Feedback",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Button(
+                onClick = { /*navController.navigate(Screens.ICard.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.report),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class Report",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { navController.navigate(Screens.StudentList.route)},
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.list),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Class List",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { /*navController.navigate(Screens.StudentList.route)*/ },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(115.dp)
+                    .width(115.dp)
+                    .background(MaterialTheme.colors.surface),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colors.surface)
+            ) {
+                Box(contentAlignment = Alignment.Center){
+                    Image(
+                        painter = painterResource(id = R.drawable.feedback),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .height(70.dp)
+                            .width(70.dp)
+                            .align(Alignment.TopCenter),
+                        alignment = Alignment.TopCenter
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Feedback",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .padding(top = 80.dp)
+                    )
+                }
+            }
         }
 
     }
@@ -98,7 +636,7 @@ fun TaskButton(
     Button(
         onClick = onClick,
         //colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.purple_500)),
-        modifier = Modifier
+        modifier = modifier
             .width(130.dp)
     ) {
         Text(
@@ -109,19 +647,21 @@ fun TaskButton(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FunctionsCopy(
     image: Int,
     funct: String,
-    onClick: () -> Unit
+    onClick: () -> Unit = {}
 ){
     Card(
+        onClick = {onClick},
         modifier = Modifier
             .padding(8.dp)
             .height(110.dp)
             .width(110.dp)
             .background(MaterialTheme.colors.surface)
-            .clickable(onClick = { onClick })
+            //.clickable(onClick = { onClick })
     ) {
         Box ( modifier = Modifier.background(colorResource(id = R.color.surfaceColor))){
             Image(
@@ -151,8 +691,10 @@ fun FunctionsCopy(
     }
 }
 
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DashboardPreview(){
     Dashboard(navController = rememberNavController())
 }
+

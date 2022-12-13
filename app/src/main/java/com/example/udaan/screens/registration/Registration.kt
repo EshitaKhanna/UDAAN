@@ -273,28 +273,33 @@ fun RegisterScreen(
 
                     //the button is enabled when the user makes a selection
                     //enabled = selectedValue.isNotEmpty(),
+
                     onClick = {
-                        navController.navigate(Screens.RegistrationScreen2.route)
-                        if (registerUiState.nameValue.isNotEmpty() &&registerUiState.emailValue.isNotEmpty()
+
+                        if (registerUiState.nameValue.isNotEmpty() && registerUiState.emailValue.isNotEmpty()
                             && registerUiState.phoneValue.isNotEmpty() && registerUiState.passwordValue.isNotEmpty()
                             && registerUiState.confirmPasswordValue.isNotEmpty() &&
-                            registerUiState.passwordValue == registerUiState.confirmPasswordValue
+                            (registerUiState.passwordValue == registerUiState.confirmPasswordValue)
                         ) {
+
                             val userInfo = UserData(registerUiState.nameValue, registerUiState.emailValue,
-                                    registerUiState.phoneValue , registerUiState.passwordValue)
+                                    registerUiState.phoneValue/* , registerUiState.passwordValue*/)
 
                             registerUiState.myRef.child(registerUiState.nameValue).setValue(userInfo).addOnSuccessListener{
                                 registerUiState.nameValue = ""
                                 registerUiState.emailValue = ""
                                 registerUiState.phoneValue = ""
                                 registerUiState.passwordValue = ""
-                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+                                Toast.makeText(context, "Account created", Toast.LENGTH_SHORT).show()
                             }.addOnFailureListener{
                                 Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
                             }
+                            navController.navigate(Screens.RegistrationScreen2.route)
                         }else{
-                            Toast.makeText(context, "Invalid values", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Invalid details", Toast.LENGTH_SHORT).show()
                         }
+
                     }
                 ) {
                     Text(stringResource(id = R.string.next))
@@ -324,8 +329,6 @@ fun RegisterScreen(
 fun RegisterScreen2(
     options: List<String>,
     onSelectionChanged: (String) -> Unit = {},
-    //onCancelButtonClicked: () -> Unit = {},
-    //onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier,
     navController: NavController
 ){
