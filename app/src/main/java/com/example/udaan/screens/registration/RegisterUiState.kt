@@ -5,12 +5,16 @@ import androidx.compose.ui.focus.FocusRequester
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class RegisterUiState (
     //firebase database
     val database: FirebaseDatabase = Firebase.database,
     val myRef: DatabaseReference = database.getReference("User Info"),
+
+    val db: FirebaseFirestore = Firebase.firestore,
 
     var nameValue:String = "",
     var emailValue:String = "",

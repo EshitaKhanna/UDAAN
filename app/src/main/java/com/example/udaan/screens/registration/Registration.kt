@@ -275,29 +275,28 @@ fun RegisterScreen(
                     //enabled = selectedValue.isNotEmpty(),
 
                     onClick = {
-
                         if (registerUiState.nameValue.isNotEmpty() && registerUiState.emailValue.isNotEmpty()
                             && registerUiState.phoneValue.isNotEmpty() && registerUiState.passwordValue.isNotEmpty()
                             && registerUiState.confirmPasswordValue.isNotEmpty() &&
                             (registerUiState.passwordValue == registerUiState.confirmPasswordValue)
                         ) {
+                            val students = hashMapOf(
+                                "Name" to registerUiState.nameValue,
+                                "E-Mail" to registerUiState.emailValue,
+                                "Phone_Number" to registerUiState.phoneValue
+                            )
 
-                            val userInfo = UserData(registerUiState.nameValue, registerUiState.emailValue,
-                                    registerUiState.phoneValue/* , registerUiState.passwordValue*/)
-
-                            registerUiState.myRef.child(registerUiState.nameValue).setValue(userInfo).addOnSuccessListener{
-                                registerUiState.nameValue = ""
-                                registerUiState.emailValue = ""
-                                registerUiState.phoneValue = ""
-                                registerUiState.passwordValue = ""
-
-                                Toast.makeText(context, "Account created", Toast.LENGTH_SHORT).show()
-                            }.addOnFailureListener{
-                                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-                            }
+                            registerUiState.db.collection("Class List")
+                                .add(students)
+                                .addOnSuccessListener { documentReference ->
+                                    Toast.makeText(context,"Signed Up with ID: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(context,e.toString(), Toast.LENGTH_SHORT).show()
+                                }
                             navController.navigate(Screens.RegistrationScreen2.route)
                         }else{
-                            Toast.makeText(context, "Invalid details", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"Insert the value!", Toast.LENGTH_SHORT).show()
                         }
 
                     }

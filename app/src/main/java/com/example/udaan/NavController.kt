@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.udaan.screens.dashboard.Dashboard
 import com.example.udaan.screens.dashboard.i_card.ICardScreen
 import com.example.udaan.screens.dashboard.students_list.ClassListCopy
+import com.example.udaan.screens.dashboard.students_list.ClassListDB
 import com.example.udaan.screens.login.LoginScreen
 import com.example.udaan.screens.registration.RegisterScreen
 import com.example.udaan.screens.registration.RegisterScreen2
@@ -41,7 +42,8 @@ fun SetUpNavController(controller: NavHostController) {
         }
         composable(Screens.StudentList.route) {
             //show screen registration
-            ClassListCopy()
+            //ClassListCopy()
+            ClassListDB()
         }
     }
 }

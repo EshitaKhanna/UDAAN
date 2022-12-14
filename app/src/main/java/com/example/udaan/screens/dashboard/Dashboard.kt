@@ -22,7 +22,6 @@ import com.example.udaan.R
 //import com.example.udaan.screens.dashboard.students_list.getStudentList
 import com.example.udaan.ui.theme.Screens
 
-
 @Composable
 fun Dashboard( navController: NavController){
     var check by remember { mutableStateOf<Boolean>(false) }
