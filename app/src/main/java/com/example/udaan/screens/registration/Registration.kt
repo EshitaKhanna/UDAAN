@@ -62,7 +62,7 @@ fun RegisterScreen(
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.TopCenter
-            ){
+        ){
             Spacer(modifier = Modifier.padding(30.dp))
         }
         Column(
@@ -217,7 +217,7 @@ fun RegisterScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(focusRequester = registerUiState.focusRequester),
-                    )
+                )
                 Spacer(modifier = Modifier.padding(5.dp))
                 //Confirm Password
                 OutlinedTextField(
@@ -311,7 +311,7 @@ fun RegisterScreen(
                         modifier = Modifier.clickable(
                             onClick = {
                                 navController.navigate(Screens.LoginScreen.route)
-                                }
+                            }
                         ),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
@@ -457,6 +457,3 @@ fun RegisterPreview(){
 fun RegisterPreview2(){
     RegisterScreen(navController = rememberNavController())
 }
-
-
-

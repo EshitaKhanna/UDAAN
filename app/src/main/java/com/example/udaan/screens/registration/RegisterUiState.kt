@@ -9,11 +9,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class RegisterUiState (
+data class RegisterUiState (
     //firebase database
     val database: FirebaseDatabase = Firebase.database,
     val myRef: DatabaseReference = database.getReference("User Info"),
 
+    //fireStore
     val db: FirebaseFirestore = Firebase.firestore,
 
     var nameValue:String = "",

@@ -1,7 +1,6 @@
 package com.example.udaan.screens.dashboard.i_card
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,15 +18,13 @@ import com.example.udaan.screens.registration.RegisterViewModel
 @Composable
 fun ICardScreen(
     navController: NavController,
-    registerViewModel: RegisterViewModel = viewModel()
+    registerViewModel: RegisterViewModel = viewModel(),
+    iCardViewModel: ICardViewModel = viewModel()
 ){
     val registerUiState by registerViewModel.uiState.collectAsState()
+    val iCardUiState by iCardViewModel.uiState.collectAsState()
 
-    Card(modifier = Modifier
-        .padding(20.dp)
-        .fillMaxSize()) {
-        Spacer(modifier = Modifier.padding(30.dp))
-        Column (
+    Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
@@ -36,46 +33,54 @@ fun ICardScreen(
                 .padding(10.dp)
         ){
             Box{
-                MyQR()
                 Column(){
+                    iCardUiState.db.collection("Class List")
+                        .whereEqualTo("E-Mail",registerUiState.emailValue)
+                        .get()
+                        .addOnSuccessListener {
+                            for(document in it){
+                                iCardUiState.rollNo = registerUiState.db.collection("Class List").document(document.id).toString()
+                                iCardUiState.name = registerUiState.db.collection("Class List").document(document.get("Name") as String).toString()
+                                iCardUiState.email = registerUiState.db.collection("Class List").document(document.get("E-Mail")as String).toString()
+                                iCardUiState.phone = registerUiState.db.collection("Class List").document(document.get("Phone_Number")as String).toString()
+                                }
+                            }
+
                     Text(
-                        text = "Name: ",
+                        text = "Name: {$iCardUiState.name}",
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        //fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = "Class: ",
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = "Enrollment Number: ",
+                        text = "Enrollment Number: {$iCardUiState.rollNo}",
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        //fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = "Mobile Number: ",
+                        text = "Mobile Number: {$iCardUiState.phone}",
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        //fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth()
                     )
-                }
+                    MyQR()
             }
-
         }
     }
 }
+
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
